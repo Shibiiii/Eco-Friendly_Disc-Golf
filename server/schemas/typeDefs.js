@@ -58,6 +58,11 @@ const typeDefs = `
         updateOrderStatus(id: ID!, status: OrderStatus!): Order
         login(email: String!, password: String!): Auth
     }
+
+    type Auth {
+        token: ID
+        user: User
+    }
     `;
 
 module.exports = typeDefs;
