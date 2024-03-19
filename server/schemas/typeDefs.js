@@ -6,6 +6,7 @@ const typeDefs = `
         price: Float!
         stock: Int!
         category: ProductCategory!
+        image: String
     }
     
     enum ProductCategory {
@@ -53,7 +54,7 @@ const typeDefs = `
     
     type Mutation {
         createUser(name: String!, email: String!, password: String!): User
-        createProduct(name: String!, description: String, price: Float, stock: Int!, category: ProductCategory!): Product
+        createProduct(name: String!, description: String, price: Float, stock: Int!, category: ProductCategory!, image: String): Product
         createOrder(products: [ID!]!, quantities:[Int!]!): Order
         updateOrderStatus(id: ID!, status: OrderStatus!): Order
         login(email: String!, password: String!): Auth
