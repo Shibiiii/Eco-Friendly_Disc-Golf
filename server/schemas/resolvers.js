@@ -43,6 +43,7 @@ const resolvers = {
       });
     },
     createOrder: async (parent, { products, quantities }, context) => {
+      console.log('context.user:', context.user); // Add this line
       if (context.user) {
         const orderItems = products.map((product, index) => {
           return { product, quantity: quantities[index] };
@@ -52,6 +53,13 @@ const resolvers = {
           $push: { orders: order._id },
         });
         return order;
+      }
+      throw new AuthenticationError('User is not authenticated.');
+    },
+    updateOrderStatus: async (parent, { id, status }, context) => {
+      console.log('context.user:', context.user); // Add this line
+      if (context.user) {
+        return await Order.findByIdAndUpdate(id, { status }, { new: true });
       }
       throw new AuthenticationError('User is not authenticated.');
     },

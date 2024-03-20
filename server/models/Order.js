@@ -13,6 +13,11 @@ const orderSchema = new Schema({
       ref: 'Product',
     },
   ],
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
 });
 
 const Order = mongoose.model('Order', orderSchema);
