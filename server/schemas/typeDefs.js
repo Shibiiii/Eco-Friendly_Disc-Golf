@@ -18,7 +18,8 @@ const typeDefs = `
     
     type User {
         id: ID!
-        name: String!
+        firstName: String!
+        lastName: String!
         email: String!
         password: String!
         orders: [Order!]!
@@ -53,7 +54,7 @@ const typeDefs = `
     }
     
     type Mutation {
-        createUser(name: String!, email: String!, password: String!): User
+        createUser(firstName: String!, lastName: String!, email: String!, password: String!): User
         createProduct(name: String!, description: String, price: Float, stock: Int!, category: ProductCategory!, image: String): Product
         createOrder(products: [ID!]!, quantities:[Int!]!): Order
         updateOrderStatus(id: ID!, status: OrderStatus!): Order
