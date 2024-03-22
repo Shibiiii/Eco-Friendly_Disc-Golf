@@ -4,12 +4,11 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import App from './App.jsx';
 import Home from './pages/Home';
-import Detail from './pages/productDetail';
+import Detail from './pages/ProductDetail';
 import ErrorPage from './pages/ErrorPage';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import PurchaseSuccess from './pages/PurchaseSuccess';
-import OrderHistory from './pages/OrderHistory';
 
 const router = createBrowserRouter([
   {
@@ -32,10 +31,6 @@ const router = createBrowserRouter([
       {
         path: '/purchaseSuccess',
         element: <PurchaseSuccess />,
-      },
-      {
-        path: '/orderHistory',
-        element: <OrderHistory />,
       },
       {
         path: '/products/:id',
