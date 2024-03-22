@@ -1,7 +1,3 @@
-const { User, Product, Order } = require('../models');
-const { signToken, AuthenticationError } = require('../utils/auth');
-const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
-
 const resolvers = {
   Query: {
     users: async () => {
@@ -17,10 +13,10 @@ const resolvers = {
       return await Product.findById(id);
     },
     orders: async () => {
-      return await Order.find();
+      return await Order.find().populate('products.product');
     },
     order: async (parent, { id }) => {
-      return await Order.findById(id);
+      return await Order.findById(id).populate('products.product');
     },
   },
   Mutation: {
@@ -50,15 +46,19 @@ const resolvers = {
             return { product, quantity: quantities[index] };
           })
         );
+
         const order = await Order.create({
           user: context.user._id,
           products: orderItems,
         });
+
         await User.findByIdAndUpdate(context.user._id, {
           $push: { orders: order._id },
         });
+
         return order;
       }
+
       throw new AuthenticationError('User is not authenticated.');
     },
     updateOrderStatus: async (parent, { id, status }, context) => {
