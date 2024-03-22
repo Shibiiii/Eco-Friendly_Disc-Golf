@@ -44,9 +44,12 @@ const resolvers = {
     },
     createOrder: async (parent, { products, quantities }, context) => {
       if (context.user) {
-        const orderItems = products.map((product, index) => {
-          return { product, quantity: quantities[index] };
-        });
+        const orderItems = await Promise.all(
+          products.map(async (productId, index) => {
+            const product = await Product.findById(productId);
+            return { product, quantity: quantities[index] };
+          })
+        );
         const order = await Order.create({
           user: context.user._id,
           products: orderItems,
