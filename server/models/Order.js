@@ -9,14 +9,20 @@ const orderSchema = new Schema({
   },
   products: [
     {
-      type: Schema.Types.ObjectId,
-      ref: 'Product',
+      product: {
+        type: Schema.Types.ObjectId,
+        ref: 'Product',
+      },
+      quantity: {
+        type: Number,
+        required: true,
+        min: [1, 'Quantity can not be less then 1.'],
+      },
     },
   ],
   user: {
     type: Schema.Types.ObjectId,
     ref: 'User',
-    required: true,
   },
 });
 
