@@ -53,7 +53,7 @@ const typeDefs = `
     }
     
     type Mutation {
-        createUser(firstName: String!, lastName: String!, email: String!, password: String!): User
+        createUser(firstName: String!, lastName: String!, email: String!, password: String!): Auth
         createProduct(name: String!, description: String, price: Float, stock: Int!, category: ProductCategory!, image: String): Product
         createOrder(items: [ID]!): Order
         updateOrderStatus(id: ID!, status: OrderStatus!): Order
