@@ -5,7 +5,7 @@ export const LOGIN = gql`
     login(email: $email, password: $password) {
       token
       user {
-        _id
+        id
       }
     }
   }
@@ -16,7 +16,7 @@ export const ADD_ORDER = gql`
     addOrder(products: $products) {
       purchaseDate
       products {
-        _id
+        id
         name
         description
         price
@@ -44,9 +44,8 @@ export const ADD_USER = gql`
     ) {
       token
       user {
-        _id
+        id
       }
     }
   }
 `;
-
