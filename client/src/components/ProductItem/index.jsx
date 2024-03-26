@@ -45,3 +45,5 @@ function ProductItem(item) {
     </div>
 	)
 }
+
+export default ProductItem;
