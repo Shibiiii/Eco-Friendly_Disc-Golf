@@ -44,14 +44,14 @@ function CategoryMenu() {
   return (
     <div>
       <h2>Choose a Category:</h2>
-      {categories.map((item) => (
+      {categories.map((category) => (
         <button
-          key={item.id}
+          key={category}
           onClick={() => {
-            handleClick(item.id);
+            handleClick(category);
           }}
         >
-          {item.name}
+          {category}
         </button>
       ))}
       <button
