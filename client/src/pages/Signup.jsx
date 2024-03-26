@@ -6,20 +6,32 @@ import { ADD_USER } from '../utils/mutations';
 
 function Signup(props) {
   const [formState, setFormState] = useState({ email: '', password: '' });
-  const [addUser] = useMutation(ADD_USER);
+  const [createUser] = useMutation(ADD_USER);
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    const mutationResponse = await addUser({
-      variables: {
-        email: formState.email,
-        password: formState.password,
-        firstName: formState.firstName,
-        lastName: formState.lastName,
-      },
-    });
-    const token = mutationResponse.data.addUser.token;
-    Auth.login(token);
+    try {
+      const mutationResponse = await createUser({
+        variables: {
+          email: formState.email,
+          password: formState.password,
+          firstName: formState.firstName,
+          lastName: formState.lastName,
+        },
+      });
+      if (
+        mutationResponse &&
+        mutationResponse.data &&
+        mutationResponse.data.createUser
+      ) {
+        const token = mutationResponse.data.createUser.token;
+        Auth.login(token);
+      } else {
+        console.error('No user data returned from the createUser mutation');
+      }
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const handleChange = (event) => {
