@@ -59,8 +59,10 @@ function ProductList() {
 					))}
 				</div>
 			) : (
-				<h3>You haven't added any products yet!</h3>
+				<h3>You havent added any products yet!</h3>
 			)}
 		</div>
 	);
 }
+
+export default ProductList;
