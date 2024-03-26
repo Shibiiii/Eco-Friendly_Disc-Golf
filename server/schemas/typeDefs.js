@@ -1,11 +1,11 @@
 const typeDefs = `
     type Product {
-        id: ID!
-        name: String!
+        id: ID
+        name: String
         description: String
-        price: Float!
-        stock: Int!
-        category: ProductCategory!
+        price: Float
+        stock: Int
+        category: ProductCategory
         image: String
     }
     
@@ -17,25 +17,23 @@ const typeDefs = `
     }
     
     type User {
-        id: ID!
-        firstName: String!
-        lastName: String!
-        email: String!
-        password: String!
-        orders: [Order!]!
-    }
-    
-    type Order {
-        id: ID!
-        products: [OrderItem!]!
-        date: String!
-        total: Float!
-        status: OrderStatus!
+        id: ID
+        firstName: String
+        lastName: String
+        email: String
+        orders: [Order]
     }
     
     type OrderItem {
-        product: Product!
-        quantity: Int!
+        product: Product
+        quantity: Int
+    }
+    
+    type Order {
+        id: ID
+        items: [OrderItem]
+        date: String
+        status: OrderStatus
     }
     
     enum OrderStatus {
@@ -45,18 +43,19 @@ const typeDefs = `
     }
     
     type Query {
-        users: [User!]!
+        users: [User]
         user(id: ID!): User
-        products: [Product!]!
+        products: [Product]
         product(id: ID): Product
-        orders: [Order!]!
+        orders: [Order]
         order(id: ID!): Order
+        categories: [ProductCategory]
     }
     
     type Mutation {
         createUser(firstName: String!, lastName: String!, email: String!, password: String!): User
         createProduct(name: String!, description: String, price: Float, stock: Int!, category: ProductCategory!, image: String): Product
-        createOrder(products: [ID!]!, quantities:[Int!]!): Order
+        createOrder(items: [ID]!): Order
         updateOrderStatus(id: ID!, status: OrderStatus!): Order
         login(email: String!, password: String!): Auth
     }
@@ -65,6 +64,6 @@ const typeDefs = `
         token: ID
         user: User
     }
-    `;
+`;
 
 module.exports = typeDefs;

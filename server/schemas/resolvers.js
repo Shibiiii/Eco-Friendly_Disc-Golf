@@ -1,10 +1,23 @@
+const { User, Product, Order } = require('../models');
+const { signToken, AuthenticationError } = require('../utils/auth');
+const stripe = require('stripe')('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
+
 const resolvers = {
   Query: {
     users: async () => {
-      return await User.find().populate('orders');
+      const users = await User.find().populate('orders');
+      users.forEach((user) => {
+        user.orders = user.orders.filter((order) => order.items.length > 0);
+      });
+      return users;
     },
-    user: async (parent, { id }) => {
-      return await User.findById(id).populate('orders');
+    user: async (parent, args) => {
+      const user = await User.findById(args.id).populate('orders');
+      if (!user) {
+        throw new Error(`No user found with id: ${args.id}`);
+      }
+      user.orders = user.orders.filter((order) => order.items.length > 0);
+      return user;
     },
     products: async () => {
       return await Product.find();
@@ -12,12 +25,15 @@ const resolvers = {
     product: async (parent, { id }) => {
       return await Product.findById(id);
     },
-    orders: async () => {
-      return await Order.find().populate('products.product');
+    orders: async (parent, args, context) => {
+      return await Order.find({ user: parent._id })
+        .populate('items.product')
+        .exec();
     },
     order: async (parent, { id }) => {
-      return await Order.findById(id).populate('products.product');
+      return await Order.findById(id);
     },
+    categories: () => ['DISCS', 'BAGS', 'ACCESSORIES', 'APPAREL'],
   },
   Mutation: {
     createUser: async (parent, { firstName, lastName, email, password }) => {
@@ -38,25 +54,30 @@ const resolvers = {
         image,
       });
     },
-    createOrder: async (parent, { products, quantities }, context) => {
+    createOrder: async (parent, { items }, context) => {
       if (context.user) {
         const orderItems = await Promise.all(
-          products.map(async (productId, index) => {
+          items.map(async (productId) => {
             const product = await Product.findById(productId);
-            return { product, quantity: quantities[index] };
+            if (!product) {
+              throw new Error(`No product found with id: ${productId}`);
+            }
+            return { product: product._id, quantity: 1 };
           })
         );
 
         const order = await Order.create({
           user: context.user._id,
-          products: orderItems,
+          items: orderItems,
+          date: new Date().toISOString(),
+          status: 'PENDING',
         });
 
         await User.findByIdAndUpdate(context.user._id, {
           $push: { orders: order._id },
         });
 
-        return order;
+        return await Order.findById(order._id).populate('items.product').exec();
       }
 
       throw new AuthenticationError('User is not authenticated.');
@@ -68,14 +89,24 @@ const resolvers = {
       throw new AuthenticationError('User is not authenticated.');
     },
     login: async (parent, { email, password }) => {
-      const user = await User.findOne({ email });
+      const user = await User.findOne({ email })
+        .populate({
+          path: 'orders',
+          populate: {
+            path: 'items.product',
+          },
+        })
+        .exec();
+
       if (!user) {
         throw new AuthenticationError('User not found.');
       }
+
       const correctPw = await user.isCorrectPassword(password);
       if (!correctPw) {
         throw new AuthenticationError('Incorrect password.');
       }
+
       const token = signToken(user);
       return { token, user };
     },
