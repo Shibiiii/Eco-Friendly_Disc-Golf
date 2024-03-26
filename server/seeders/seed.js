@@ -153,6 +153,16 @@ db.once('open', async () => {
       price: 19.99,
       stock: 250,
     },
+    {
+      name: 'Under Armor Shirt',
+      category: 'APPAREL',
+      description:
+        'Vestibulum et erat finibus erat suscipit vulputate sed vitae dui. Ut laoreet tellus sit amet justo bibendum ultrices. Donec vitae felis vestibulum, congue augue eu, finibus turpis.',
+      image: '*jpg placeholder*',
+      price: 24.99,
+      stock: 175,
+    },
+
   ]);
 
   console.log('products seeded');
