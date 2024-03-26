@@ -31,4 +31,36 @@ function ProductList() {
 			});
 		}
 	}, [data, loading, dispatch]);
+
+	function filterProducts() {
+		if (!currentCategory) {
+			return state.products;
+		}
+
+		return state.products.filter(
+			(product) => product.category.id === currentCategory
+		);
+	}
+
+	return (
+		<div className="my-2">
+			<h2>Our Products:</h2>
+			{state.products.length ? (
+				<div className="flex-row">
+					{filterProducts().map((product) => (
+						<ProductItem
+							key={product._id}
+							_id={product._id}
+							image={product.image}
+							name={product.name}
+							price={product.price}
+							quantity={product.quantity}
+						/>
+					))}
+				</div>
+			) : (
+				<h3>You haven't added any products yet!</h3>
+			)}
+		</div>
+	);
 }
