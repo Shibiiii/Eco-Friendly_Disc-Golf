@@ -31,6 +31,12 @@ export function idbPromise(storeName, method, object) {
 
       switch (method) {
         case 'put':
+          if (!object.hasOwnProperty(store.keyPath)) {
+            console.error(
+              `Object does not have required property: ${store.keyPath}`
+            );
+            break;
+          }
           store.put(object);
           resolve(object);
           break;
