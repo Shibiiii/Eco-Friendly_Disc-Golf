@@ -7,7 +7,7 @@ import { idbPromise } from '../../utils/helpers';
 function ProductItem(item) {
 	const [state, dispatch] = useStoreContext();
 
-	const { image, name, id, price, quantity } = item;
+	const { name, id, price, quantity } = item;
 
 	const { cart } = state;
 
@@ -28,22 +28,24 @@ function ProductItem(item) {
 				type: ADD_TO_CART,
 				product: { ...item, purchaseQuantity: 1 },
 			});
-			idbPromise('cart', 'put', { ...item, purchaseQuantity: 1 }'cart', 'put', { ...item, purchaseQuantity: 1 })
+			idbPromise('cart', 'put', { ...item, purchaseQuantity: 1 });
 		}
 	};
 
 	return (
 		<div className="card px-1 py-1">
-      <Link to={`/products/${_id}`}>
-        <p>{name}</p>
-      </Link>
-      <div>
-        <div>{quantity} {pluralize("item", quantity)} in stock</div>
-        <span>${price}</span>
-      </div>
-      <button onClick={addToCart}>Add to cart</button>
-    </div>
-	)
+			<Link to={`/products/${id}`}>
+				<p>{name}</p>
+			</Link>
+			<div>
+				<div>
+					{quantity} {pluralize('item', quantity)} in stock
+				</div>
+				<span>${price}</span>
+			</div>
+			<button onClick={addToCart}>Add to cart</button>
+		</div>
+	);
 }
 
 export default ProductItem;
