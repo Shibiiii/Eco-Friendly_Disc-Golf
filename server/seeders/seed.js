@@ -177,8 +177,13 @@ db.once('open', async () => {
   const orders = await Order.create([
     {
       purchaseDate: new Date().toISOString(),
-      products: [products[0]._id, products[0]._id, products[1]._id],
+      products: [
+        { product: products[0]._id, quantity: 2 },
+        { product: products[1]._id, quantity: 1 },
+      ],
       user: users[0]._id,
+      status: 'PENDING',
+      total: products[0].price * 2 + products[1].price,
     },
   ]);
 
