@@ -68,7 +68,8 @@
   }
 
   .cart-closed {
-    position: relative;
-    margin: 0 auto;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
   }
 }
