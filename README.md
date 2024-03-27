@@ -8,13 +8,13 @@ This is an e-commerce store focused on selling eco-friendly disc golf equipment.
 
 ## Table of Contents
 
-- [Installation](#installation)
+- [Link](#link)
 - [Screenshots](#screenshots)
 - [Usage](#usage)
 - [License](#license)
 - [Contributors](#contributors)
 
-## Installation
+## Link
 
 To use this application, follow this link: --------
 
