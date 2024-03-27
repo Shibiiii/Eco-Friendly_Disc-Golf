@@ -22,7 +22,7 @@ db.once('open', async () => {
       name: 'Banshee',
       description:
         'Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos.',
-      image: '*jpg placholder*',
+      image: 'Banshee.png',
       category: 'DISCS',
       price: 49.99,
       stock: 50,
@@ -162,7 +162,6 @@ db.once('open', async () => {
       price: 24.99,
       stock: 175,
     },
-
   ]);
 
   console.log('products seeded');
