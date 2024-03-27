@@ -25,7 +25,7 @@ function ProductDetail() {
 
   useEffect(() => {
     if (products.length) {
-      setCurrentProduct(products.find((product) => product._id === id));
+      setCurrentProduct(products.find((product) => product.id === id));
     } else if (data) {
       dispatch({
         type: UPDATE_PRODUCTS,
@@ -46,11 +46,11 @@ function ProductDetail() {
   }, [products, data, loading, dispatch, id]);
 
   const addToCart = () => {
-    const itemInCart = cart.find((cartItem) => cartItem._id === id);
+    const itemInCart = cart.find((cartItem) => cartItem.id === id);
     if (itemInCart) {
       dispatch({
         type: UPDATE_CART_QUANTITY,
-        _id: id,
+        id: id,
         purchaseQuantity: parseInt(itemInCart.purchaseQuantity) + 1,
       });
       idbPromise('cart', 'put', {
@@ -69,7 +69,7 @@ function ProductDetail() {
   const removeFromCart = () => {
     dispatch({
       type: REMOVE_FROM_CART,
-      _id: currentProduct._id,
+      id: currentProduct.id,
     });
 
     idbPromise('cart', 'delete', { ...currentProduct });
@@ -89,7 +89,7 @@ function ProductDetail() {
             <strong>Price:</strong>${currentProduct.price}{' '}
             <button onClick={addToCart}>Add to Cart</button>
             <button
-              disabled={!cart.find((p) => p._id === currentProduct._id)}
+              disabled={!cart.find((p) => p.id === currentProduct.id)}
               onClick={removeFromCart}
             >
               Remove from Cart
