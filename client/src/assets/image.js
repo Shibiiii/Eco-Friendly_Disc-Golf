@@ -1,9 +1,11 @@
 import React from 'react';
-import images from './images';
+import images from './images/';
 
 function Imgs() {
     return(
-        <div>
+        <div style={{
+            height: 300
+        }}>
             <img src= {images} alt='eco-friendly-discgolf-gear'></img>
         </div>
     )
