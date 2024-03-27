@@ -1,12 +1,12 @@
 import React from 'react';
-import images from './images/';
+import image1 from './assets/images/Banshee';
 
 function Imgs() {
     return(
         <div style={{
             height: 300
         }}>
-            <img src= {images} alt='eco-friendly-discgolf-gear'></img>
+            <img src= {image1} alt='eco-friendly-discgolf-gear'></img>
         </div>
     )
 }
