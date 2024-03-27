@@ -37,7 +37,7 @@ function Nav() {
           <span role="img" aria-label="shopping bag">
             🥏
           </span>
-          Disc Golf Shop
+          Eco Flight Discs
         </Link>
       </h1>
 
