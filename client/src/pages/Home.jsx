@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 
 const Home = () => {
   useEffect(() => {
-    document.title = 'Disc Golf Shop 🥏';
+    document.title = 'Eco Flight Discs 🥏';
   }, []);
 
   return (
